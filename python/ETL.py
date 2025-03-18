@@ -90,7 +90,7 @@ class Extract:
             logging.info(f'\n Falha ao Extrair relatorio renovacoes (Viavante): {e}')
 
 
-    def exctract_all_placas():
+    def extract_all_placas():
 
         try:
 
@@ -133,7 +133,7 @@ class Transform:
 
             df_ativ = Extract.extract_ativacoes()
             df_renov = Extract.extract_renovacoes()
-            df_all_placas = Extract.exctract_all_placas()
+            df_all_placas = Extract.extract_all_placas()
             
 
 
@@ -213,6 +213,20 @@ class Transform:
             df_final['data_ativacao'] = df_final['data_ativacao'].fillna(pd.Timestamp('1900-01-01'))
             df_final['cooperativa'] = df_final['cooperativa'].fillna('NULL')
             df_final['migration_from'] = df_final['migration_from'].fillna('NULL')
+            
+
+            
+            today = pd.Timestamp.today().normalize()
+
+            # Converte a coluna 'data_ativacao' para datetime (caso ainda não esteja)
+            df_final['data_ativacao'] = pd.to_datetime(df_final['data_ativacao'], format='%d/%m/%Y', errors='coerce')
+
+            # Filtra os registros onde 'data_ativacao' é menor que today
+            df_final = df_final[df_final['data_ativacao'] < today]
+
+            # Converte 'data_ativacao' para apenas a data (removendo horário) de forma segura
+            df_final['data_ativacao'] = df_final['data_ativacao'].dt.date
+
 
             
             # df_final = df_final.fillna('NULL')
@@ -232,9 +246,12 @@ class Transform:
     def transforming_df_all_placas():
 
         try:
-            df_all_placas = Extract.exctract_all_placas()
+            today = pd.Timestamp.today()
+            df_all_placas = Extract.extract_all_placas()
             df_all_placas['data_ativacao'] = pd.to_datetime(df_all_placas['data_ativacao'],format='%d/%m/%Y')
-            df_placas_atual = df_all_placas.loc[df_all_placas.groupby('placa')['data_ativacao'].idxmax()]
+            df_placas_atual = df_all_placas.loc[df_all_placas.groupby('placa')['data_ativacao'].idxmax()] 
+            df_placas_atual = df_placas_atual[pd.to_datetime(df_placas_atual['data_ativacao'])<today]
+            df_placas_atual['data_ativacao']=df_placas_atual['data_ativacao'].dt.date
 
             logging.info('\n ----------------------------------------------------------------------------------')
             logging.info('\n Segundo Processo de Transformacao de Dados concluído com sucesso!')
@@ -286,29 +303,6 @@ class Load_relat_ativ_pend:
                 df_canceladas.to_excel(wb2, index=False, sheet_name='Canceladas')
 
 
-
-            # df_final = import_df_final()
-            # df_placas_atual = import_df_all_placas()
-
-            # save_path = r'C:\Users\raphael.almeida\Documents\Processos\Ativações Placas\Relatório de Placas Ativadas'
-            # df_final_name = 'Movimentação de placas.xlsx'
-            # df_all_placas_name = 'Relação total de placas.xlsx'
-
-            # path1 = os.path.join(save_path, df_final_name)
-            # path2 = os.path.join(save_path, df_all_placas_name)
-            
-            # df_final.to_excel(path1, index=False, engine='openpyxl')
-            # df_placas_atual.to_excel(path2, index=False, engine='openpyxl')
-
-            # #salvando no sharepoint
-            # share = r'C:\Users\raphael.almeida\Grupo Unus\analise de dados - Arquivos em excel\Acompanhamento de Placas'
-            # share_path1 = os.path.join(share, os.path.basename(path1))
-            # share_path2 = os.path.join(share,os.path.basename(path2))
-
-            # shutil.copy(path1,share_path1)
-            # shutil.copy(path2,share_path2)
-
-
             logging.info('\n ----------------------------------------------------------------------------------')
             logging.info('\n Processo de Carregamento de Dados concluido com sucesso!')
 
@@ -322,10 +316,10 @@ class Load_relat_ativ_pend:
 
 
 
-# if __name__ == '__main__':
-#     Load_relat_ativ_pend.load_files()
+if __name__ == '__main__':
+    Load_relat_ativ_pend.load_files()
 
-#     print("transform ok")
+
 
 
 
