@@ -302,6 +302,8 @@ class Load_relat_ativ_pend:
                 df_placas_atual.to_excel(wb2, index=False, sheet_name='Ativadas')
                 df_canceladas.to_excel(wb2, index=False, sheet_name='Canceladas')
 
+            #pode dar errado
+            return df_final, df_placas_atual, df_canceladas
 
             logging.info('\n ----------------------------------------------------------------------------------')
             logging.info('\n Processo de Carregamento de Dados concluido com sucesso!')
