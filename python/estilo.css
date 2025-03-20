@@ -1,0 +1,41 @@
+/* Estiliza o cabeçalho das colunas, o índice, a última coluna e a última linha */
+.tabela thead th, 
+.tabela tbody th, 
+.tabela td:last-child, 
+.tabela tbody tr:last-child td {
+    background-color: #f0f0f0; /* Cinza claro */
+    color: black; /* Fonte preta */
+    font-weight: bold; /* Negrito */
+}
+
+/* Estiliza todas as outras células */
+.tabela td {
+    background-color: white; /* Fundo branco */
+    color: black; /* Fonte preta */
+    text-align: center; /* Centraliza os valores */
+}
+
+/* Estiliza a célula do total geral (interseção da última linha e última coluna) */
+.tabela tbody tr:last-child td:last-child {
+    background-color: #404040; /* Cinza escuro */
+    color: white; /* Texto branco */
+    font-weight: bold;
+}
+
+/* Adiciona bordas suaves entre as células */
+.tabela th, 
+.tabela td {
+    border: 1px solid #d9d9d9; /* Cinza claro */
+    border-collapse: collapse;
+}
+
+/* Garante espaçamento e formatação das células */
+.tabela {
+    border-spacing: 0;
+    border-collapse: collapse;
+}
+
+/* Formata os valores numéricos para terem duas casas decimais */
+.tabela td {
+    font-variant-numeric: tabular-nums;
+}
