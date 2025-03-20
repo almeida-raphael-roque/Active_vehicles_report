@@ -6,6 +6,7 @@
     background-color: #f0f0f0; /* Cinza claro */
     color: black; /* Fonte preta */
     font-weight: bold; /* Negrito */
+    text-align: center; /* Centraliza os cabeçalhos e as células */
 }
 
 /* Estiliza todas as outras células */
@@ -22,6 +23,11 @@
     font-weight: bold;
 }
 
+/* Adiciona uma linha superior à última linha da tabela */
+.tabela tbody tr:last-child {
+    border-top: 2px solid #404040; /* Borda superior cinza escuro */
+}
+
 /* Adiciona bordas suaves entre as células */
 .tabela th, 
 .tabela td {
@@ -33,6 +39,7 @@
 .tabela {
     border-spacing: 0;
     border-collapse: collapse;
+    border: 2px solid #404040; /* Borda cinza escuro ao redor da tabela */
 }
 
 /* Formata os valores numéricos para terem duas casas decimais */

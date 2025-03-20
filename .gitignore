@@ -2,3 +2,6 @@
 extract.py
 load.py
 transform.py
+*.html
+*.css
+*.png
