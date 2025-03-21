@@ -59,8 +59,6 @@ class Aggregate:
 
         tabela_df = tabela_df.applymap(lambda x: f"{x:,.0f}".replace(',', '.') if isinstance(x, (int,float)) else x)
 
-        print(tabela_df.head())
+        return tabela_df
 
-if __name__ == '__main__':
-    Aggregate.aggregate_dataframe()
 
