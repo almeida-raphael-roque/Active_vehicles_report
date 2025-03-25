@@ -33,7 +33,7 @@ class Extract:
             df_ativ = awr.athena.read_sql_query(query,database='silver')
         
             logging.info('\n ----------------------------------------------------------------------------------')
-            logging.info('\n Relatorio ativacoes de placas novas  - Dados Extraidos com sucesso!')
+            logging.info('\n Placas Novas - Dados Extraidos com sucesso!')
 
             return df_ativ
 
@@ -55,7 +55,7 @@ class Extract:
             df_renov = awr.athena.read_sql_query(query, database='silver')
         
             logging.info('\n ----------------------------------------------------------------------------------')
-            logging.info('\n Relatorio renovacoes (Vivante)  - Dados Extraidos com sucesso!')
+            logging.info('\n Placas renovadas - Dados Extraidos com sucesso!')
 
             return df_renov
 
@@ -77,7 +77,7 @@ class Extract:
             df_cancel = awr.athena.read_sql_query(query, database='silver')
         
             logging.info('\n ----------------------------------------------------------------------------------')
-            logging.info('\n Relatorio renovacoes (Vivante)  - Dados Extraidos com sucesso!')
+            logging.info('\n Placas canceladas  - Dados Extraidos com sucesso!')
 
             return df_cancel
 
@@ -97,12 +97,10 @@ class Extract:
                 query = file.read()
 
             df_all_placas = awr.athena.read_sql_query(query, database='silver')
-        
-            logging.info('\n ----------------------------------------------------------------------------------')
-            logging.info('\n Relatorio renovacoes(Stcoop)  - Dados Extraidos com sucesso!')
+    
 
             logging.info('\n ----------------------------------------------------------------------------------')
-            logging.info('\n Processo de Extracao de Dados concluido com sucesso!')
+            logging.info('\n Todas as placas extraídas com sucesso!')
 
             return df_all_placas
 
